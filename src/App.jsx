@@ -2,14 +2,20 @@ import { useState } from "react";
 import React from "react";
 import "./App.css";
 
-import Header from "./Header";
-import Hero from "./Hero";
-import Button from "./Button";
-import Experience from "./Experience";
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import SocialButton from "./components/SocialButton";
+import Experience from "./components/Experience";
+import TabButton from "./components/TabButton";
 
 import { EXPERIENCES } from "./data";
 
 function App() {
+  const [selectedContent, setSelectedContent] = useState("Selfbook");
+  function handleSelect(selected) {
+    setSelectedContent(selected);
+  }
+
   return (
     <>
       <Header />
@@ -17,39 +23,72 @@ function App() {
         <section id="hero">
           <Hero />
           <div id="btns">
-            <Button className="socialbtn">
+            <SocialButton>
               <i className="fa fa-envelope"></i> Send an Email
-            </Button>
-            <Button className="socialbtn">
+            </SocialButton>
+            <SocialButton>
               <i className="fa-brands fa-linkedin"></i> LinkedIn
-            </Button>
-            <Button className="socialbtn">
+            </SocialButton>
+            <SocialButton>
               <i className="fa-brands fa-upwork"></i> Upwork
-            </Button>
-            <Button className="socialbtn">
+            </SocialButton>
+            <SocialButton>
               <i className="fa-brands fa-github"></i> Github
-            </Button>
+            </SocialButton>
           </div>
         </section>
         <section id="experience">
-          {/* <h3>Experience</h3> */}
-          {/* <menu> */}
-            {/* <Button className="menubtn"></Button> */}
-            {/* <Button className="menubtn">Wevoz</Button>
-            <Button className="menubtn">FreeBeings</Button>
-            <Button className="menubtn">TDF</Button>
-            <Button className="menubtn">Upwork</Button>
-            <Button className="menubtn">Shoppy</Button> */}
-             {/* {EXPERIENCES.map( item => (
-              <Button className="menubtn" key={item.title}>{item.title}</Button>
-            ))}
-          </menu>
-          <div id="content">
-           {EXPERIENCES.map( item => (
-            <Experience key={item.title} {...item} />
-           ))}
-          </div> */}
+          <h3>Experience</h3>
+          <div>
+            <menu>
+              <TabButton
+                isSelected={selectedContent === "Selfbook"}
+                onSelect={() => handleSelect("Selfbook")}
+              >
+                Selfbook
+              </TabButton>
+              <TabButton
+                isSelected={selectedContent === "Wevoz"}
+                onSelect={() => handleSelect("Wevoz")}
+              >
+                Wevoz
+              </TabButton>
+              <TabButton
+                isSelected={selectedContent === "FreeBeings"}
+                onSelect={() => handleSelect("FreeBeings")}
+              >
+                FreeBeings
+              </TabButton>
+              <TabButton
+                isSelected={selectedContent === "TDF"}
+                onSelect={() => handleSelect("TDF")}
+              >
+                TDF
+              </TabButton>
+              <TabButton
+                isSelected={selectedContent === "Upwork"}
+                onSelect={() => handleSelect("Upwork")}
+              >
+                Upwork
+              </TabButton>
+              <TabButton
+                isSelected={selectedContent === "Shoppy"}
+                onSelect={() => handleSelect("Shoppy")}
+              >
+                Shoppy
+              </TabButton>
+            </menu>
+            <div id="content">
+              {
+                <Experience
+                  key={EXPERIENCES[selectedContent].title}
+                  {...EXPERIENCES[selectedContent]}
+                />
+              }
+            </div>
+          </div>
         </section>
+        <hr />
       </main>
     </>
   );
